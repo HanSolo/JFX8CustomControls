@@ -1,0 +1,20 @@
+.my-button {
+    -fx-base                    : #545454;
+    -fx-background              : #F4F4F4;
+    -fx-focus-color             : #FF0000;
+    -fx-control-inner-background: #FFFFFF;
+    -fx-background-insets       : 0 0 -1 0, 0, 3, 4;
+    -fx-inner-border            : linear-gradient(to bottom,
+                                                  derive(-fx-color,74.0%) 0%,
+                                                  derive(-fx-color,36.4%) 100%);
+    -fx-body-color              : linear-gradient(to bottom,
+                                                  derive(-fx-color, 35.0%) 0%,
+                                                  derive(-fx-color, -6.0%) 100%);
+}
+
+.my-button:focused {
+    -fx-background-insets: -1.4, 0, 3, 4;
+}
+.my-button:hover {
+    -fx-hover-base: lightgray;
+}

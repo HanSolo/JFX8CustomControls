@@ -1,0 +1,14 @@
+.my-control {
+    -fx-skin   : "jfx8controls.csspseudoclass.skin.MyCtrlSkin";
+    -area-color: blue;
+}
+
+.my-control .area {
+    -fx-background-color : red, white, -area-color;
+    -fx-background-insets: 0, 10, 20;
+    -fx-background-radius: 100;
+}
+
+.my-control:interactive .area {
+    -fx-background-color : darkviolet, yellow, -area-color;
+}

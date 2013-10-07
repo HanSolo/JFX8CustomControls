@@ -1,6 +1,7 @@
 package jfx8controls.extendingcontrol;
 
 import com.sun.javafx.scene.control.skin.LabeledSkinBase;
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -24,10 +25,50 @@ public class SlideCheckBoxSkin extends LabeledSkinBase<SlideCheckBox, SlideCheck
     private static final double    THUMB_WIDTH  = 48;
     private static final double    THUMB_HEIGHT = 34;
     private final        StackPane box          = new StackPane();
-    private              Region    markBox;
-    private              Region    crossBox;
-    private              Region    thumb;
-    private              Timeline  timeline;
+    private Region   markBox;
+    private Region   crossBox;
+    private Region   thumb;
+    private Timeline timeline;
+
+    private KeyValue kvThumbStartTranslateSelected;
+    private KeyValue kvThumbEndTranslateSelected;
+    private KeyValue kvMarkStartOpacitySelected;
+    private KeyValue kvMarkEndOpacitySelected;
+    private KeyValue kvMarkStartScaleXSelected;
+    private KeyValue kvMarkEndScaleXSelected;
+    private KeyValue kvMarkStartScaleYSelected;
+    private KeyValue kvMarkEndScaleYSelected;
+    private KeyValue kvMarkStartScaleUpXSelected;
+    private KeyValue kvMarkEndScaleUpXSelected;
+    private KeyValue kvMarkStartScaleUpYSelected;
+    private KeyValue kvMarkEndScaleUpYSelected;
+    private KeyValue kvMarkStartScaleDownXSelected;
+    private KeyValue kvMarkEndScaleDownXSelected;
+    private KeyValue kvMarkStartScaleDownYSelected;
+    private KeyValue kvMarkEndScaleDownYSelected;
+    private KeyValue kvCrossStartOpacitySelected;
+    private KeyValue kvCrossEndOpacitySelected;
+    private KeyValue kvCrossStartScaleXSelected;
+    private KeyValue kvCrossEndScaleXSelected;
+    private KeyValue kvCrossStartScaleYSelected;
+    private KeyValue kvCrossEndScaleYSelected;
+
+    private KeyValue kvThumbStartTranslateDeselect;
+    private KeyValue kvThumbEndTranslateDeselect;
+    private KeyValue kvMarkStartOpacityDeselect;
+    private KeyValue kvMarkEndOpacityDeselect;
+    private KeyValue kvMarkStartScaleXDeselect;
+    private KeyValue kvMarkEndScaleXDeselect;
+    private KeyValue kvMarkStartScaleYDeselect;
+    private KeyValue kvMarkEndScaleYDeselect;
+    private KeyValue kvCrossStartOpacityDeselect;
+    private KeyValue kvCrossEndOpacityDeselect;
+    private KeyValue kvCrossStartScaleXDeselect;
+    private KeyValue kvCrossEndScaleXDeselect;
+    private KeyValue kvCrossStartScaleYDeselect;
+    private KeyValue kvCrossEndScaleYDeselect;
+    private KeyValue kvCrossRotateStart;
+    private KeyValue kvCrossRotateEnd;
 
 
     public SlideCheckBoxSkin(SlideCheckBox checkbox) {
@@ -35,6 +76,7 @@ public class SlideCheckBoxSkin extends LabeledSkinBase<SlideCheckBox, SlideCheck
 
         init();
         initGraphics();
+        initKeyValues();
         registerListeners();
     }
 
@@ -70,6 +112,67 @@ public class SlideCheckBoxSkin extends LabeledSkinBase<SlideCheckBox, SlideCheck
         box.getStyleClass().setAll("box");
         box.getChildren().addAll(markBox, crossBox, thumb);
         updateChildren();
+    }
+
+    private void initKeyValues() {
+        // KeyValues selected
+        kvThumbStartTranslateSelected = new KeyValue(thumb.translateXProperty(), -24, Interpolator.EASE_BOTH);
+        kvThumbEndTranslateSelected   = new KeyValue(thumb.translateXProperty(), 24, Interpolator.EASE_BOTH);
+
+        kvMarkStartOpacitySelected    = new KeyValue(markBox.opacityProperty(), 0, Interpolator.EASE_BOTH);
+        kvMarkEndOpacitySelected      = new KeyValue(markBox.opacityProperty(), 1, Interpolator.EASE_BOTH);
+
+        kvMarkStartScaleXSelected     = new KeyValue(markBox.scaleXProperty(), 0, Interpolator.EASE_BOTH);
+        kvMarkEndScaleXSelected       = new KeyValue(markBox.scaleXProperty(), 1, Interpolator.EASE_BOTH);
+
+        kvMarkStartScaleYSelected     = new KeyValue(markBox.scaleYProperty(), 0, Interpolator.EASE_BOTH);
+        kvMarkEndScaleYSelected       = new KeyValue(markBox.scaleYProperty(), 1, Interpolator.EASE_BOTH);
+
+        kvMarkStartScaleUpXSelected   = new KeyValue(markBox.scaleXProperty(), 1, Interpolator.EASE_BOTH);
+        kvMarkEndScaleUpXSelected     = new KeyValue(markBox.scaleXProperty(), 1.5, Interpolator.EASE_BOTH);
+
+        kvMarkStartScaleUpYSelected   = new KeyValue(markBox.scaleYProperty(), 1, Interpolator.EASE_BOTH);
+        kvMarkEndScaleUpYSelected     = new KeyValue(markBox.scaleYProperty(), 1.5, Interpolator.EASE_BOTH);
+
+        kvMarkStartScaleDownXSelected = new KeyValue(markBox.scaleXProperty(), 1.5, Interpolator.EASE_BOTH);
+        kvMarkEndScaleDownXSelected   = new KeyValue(markBox.scaleXProperty(), 1, Interpolator.EASE_BOTH);
+
+        kvMarkStartScaleDownYSelected = new KeyValue(markBox.scaleYProperty(), 1.5, Interpolator.EASE_BOTH);
+        kvMarkEndScaleDownYSelected   = new KeyValue(markBox.scaleYProperty(), 1, Interpolator.EASE_BOTH);
+
+        kvCrossStartOpacitySelected   = new KeyValue(crossBox.opacityProperty(), 1, Interpolator.EASE_BOTH);
+        kvCrossEndOpacitySelected     = new KeyValue(crossBox.opacityProperty(), 0, Interpolator.EASE_BOTH);
+
+        kvCrossStartScaleXSelected    = new KeyValue(crossBox.scaleXProperty(), 1, Interpolator.EASE_BOTH);
+        kvCrossEndScaleXSelected      = new KeyValue(crossBox.scaleXProperty(), 0, Interpolator.EASE_BOTH);
+
+        kvCrossStartScaleYSelected    = new KeyValue(crossBox.scaleYProperty(), 1, Interpolator.EASE_BOTH);
+        kvCrossEndScaleYSelected      = new KeyValue(crossBox.scaleYProperty(), 0, Interpolator.EASE_BOTH);
+
+        // KeyValues deselected
+        kvThumbStartTranslateDeselect = new KeyValue(thumb.translateXProperty(), 24);
+        kvThumbEndTranslateDeselect   = new KeyValue(thumb.translateXProperty(), -24);
+
+        kvMarkStartOpacityDeselect    = new KeyValue(markBox.opacityProperty(), 1);
+        kvMarkEndOpacityDeselect      = new KeyValue(markBox.opacityProperty(), 0);
+
+        kvMarkStartScaleXDeselect     = new KeyValue(markBox.scaleXProperty(), 1);
+        kvMarkEndScaleXDeselect       = new KeyValue(markBox.scaleXProperty(), 0);
+
+        kvMarkStartScaleYDeselect     = new KeyValue(markBox.scaleYProperty(), 1);
+        kvMarkEndScaleYDeselect       = new KeyValue(markBox.scaleYProperty(), 0);
+
+        kvCrossStartOpacityDeselect   = new KeyValue(crossBox.opacityProperty(), 0);
+        kvCrossEndOpacityDeselect     = new KeyValue(crossBox.opacityProperty(), 1);
+
+        kvCrossStartScaleXDeselect    = new KeyValue(crossBox.scaleXProperty(), 0);
+        kvCrossEndScaleXDeselect      = new KeyValue(crossBox.scaleXProperty(), 1);
+
+        kvCrossStartScaleYDeselect    = new KeyValue(crossBox.scaleYProperty(), 0);
+        kvCrossEndScaleYDeselect      = new KeyValue(crossBox.scaleYProperty(), 1);
+
+        kvCrossRotateStart            = new KeyValue(crossBox.rotateProperty(), 0);
+        kvCrossRotateEnd              = new KeyValue(crossBox.rotateProperty(), 360);
     }
 
     private void registerListeners() {
@@ -111,69 +214,32 @@ public class SlideCheckBoxSkin extends LabeledSkinBase<SlideCheckBox, SlideCheck
 
     private void toggle() {
         if (getSkinnable().isSelected()) {
-            // switch to deselected
-            KeyValue kvThumbStartTranslate = new KeyValue(thumb.translateXProperty(), -24);
-            KeyValue kvThumbEndTranslate   = new KeyValue(thumb.translateXProperty(), 24);
+            KeyFrame kfStart = new KeyFrame(Duration.ZERO, kvThumbStartTranslateSelected,
+                                                           kvMarkStartOpacitySelected, kvMarkStartScaleXSelected, kvMarkStartScaleYSelected,
+                                                           kvCrossStartOpacitySelected, kvCrossStartScaleXSelected, kvCrossStartScaleYSelected);
+            KeyFrame kfEnd   = new KeyFrame(Duration.millis(180), kvThumbEndTranslateSelected,
+                                                                  kvMarkEndOpacitySelected, kvMarkEndScaleXSelected, kvMarkEndScaleYSelected,
+                                                                  kvCrossEndOpacitySelected, kvCrossEndScaleXSelected, kvCrossEndScaleYSelected);
+            KeyFrame kfScaleUpStart   = new KeyFrame(Duration.millis(250), kvMarkStartScaleUpXSelected, kvMarkStartScaleUpYSelected);
+            KeyFrame kfScaleUpEnd     = new KeyFrame(Duration.millis(350), kvMarkEndScaleUpXSelected, kvMarkEndScaleUpYSelected);
+            KeyFrame kfScaleDownStart = new KeyFrame(Duration.millis(350), kvMarkStartScaleDownXSelected, kvMarkStartScaleDownYSelected);
+            KeyFrame kfScaleDownEnd   = new KeyFrame(Duration.millis(500), kvMarkEndScaleDownXSelected, kvMarkEndScaleDownYSelected);
 
-            KeyValue kvMarkStartOpacity    = new KeyValue(markBox.opacityProperty(), 0);
-            KeyValue kvMarkEndOpacity      = new KeyValue(markBox.opacityProperty(), 1);
-
-            KeyValue kvMarkStartScaleX     = new KeyValue(markBox.scaleXProperty(), 0);
-            KeyValue kvMarkEndScaleX       = new KeyValue(markBox.scaleXProperty(), 1);
-
-            KeyValue kvMarkStartScaleY     = new KeyValue(markBox.scaleYProperty(), 0);
-            KeyValue kvMarkEndScaleY       = new KeyValue(markBox.scaleYProperty(), 1);
-
-            KeyValue kvCrossStartOpacity   = new KeyValue(crossBox.opacityProperty(), 1);
-            KeyValue kvCrossEndOpacity     = new KeyValue(crossBox.opacityProperty(), 0);
-
-            KeyValue kvCrossStartScaleX    = new KeyValue(crossBox.scaleXProperty(), 1);
-            KeyValue kvCrossEndScaleX      = new KeyValue(crossBox.scaleXProperty(), 0);
-
-            KeyValue kvCrossStartScaleY    = new KeyValue(crossBox.scaleYProperty(), 1);
-            KeyValue kvCrossEndScaleY      = new KeyValue(crossBox.scaleYProperty(), 0);
-
-            KeyFrame kfStart = new KeyFrame(Duration.ZERO, kvThumbStartTranslate,
-                                                           kvMarkStartOpacity, kvMarkStartScaleX, kvMarkStartScaleY,
-                                                           kvCrossStartOpacity, kvCrossStartScaleX, kvCrossStartScaleY);
-            KeyFrame kfEnd   = new KeyFrame(Duration.millis(200), kvThumbEndTranslate,
-                                                                  kvMarkEndOpacity, kvMarkEndScaleX, kvMarkEndScaleY,
-                                                                  kvCrossEndOpacity, kvCrossEndScaleX, kvCrossEndScaleY);
-
-            timeline.getKeyFrames().setAll(kfStart, kfEnd);
+            timeline.getKeyFrames().setAll(kfStart, kfEnd, kfScaleUpStart, kfScaleUpEnd, kfScaleDownStart, kfScaleDownEnd);
             timeline.play();
         } else {
-            // switch to selected
-            KeyValue kvThumbStartTranslate = new KeyValue(thumb.translateXProperty(), 24);
-            KeyValue kvThumbEndTranslate   = new KeyValue(thumb.translateXProperty(), -24);
+            KeyFrame kfStart       = new KeyFrame(Duration.ZERO, kvThumbStartTranslateDeselect,
+                                                  kvMarkStartOpacityDeselect, kvMarkStartScaleXDeselect, kvMarkStartScaleYDeselect,
+                                                  kvCrossStartOpacityDeselect, kvCrossStartScaleXDeselect, kvCrossStartScaleYDeselect);
+            KeyFrame kfEnd         = new KeyFrame(Duration.millis(180), kvThumbEndTranslateDeselect,
+                                                  kvMarkEndOpacityDeselect, kvMarkEndScaleXDeselect, kvMarkEndScaleYDeselect,
+                                                  kvCrossEndOpacityDeselect, kvCrossEndScaleXDeselect, kvCrossEndScaleYDeselect);
+            KeyFrame kfRotateStart = new KeyFrame(Duration.millis(250), kvCrossRotateStart);
+            KeyFrame kfRotateEnd   = new KeyFrame(Duration.millis(750), kvCrossRotateEnd);
 
-            KeyValue kvMarkStartOpacity    = new KeyValue(markBox.opacityProperty(), 1);
-            KeyValue kvMarkEndOpacity      = new KeyValue(markBox.opacityProperty(), 0);
-
-            KeyValue kvMarkStartScaleX     = new KeyValue(markBox.scaleXProperty(), 1);
-            KeyValue kvMarkEndScaleX       = new KeyValue(markBox.scaleXProperty(), 0);
-
-            KeyValue kvMarkStartScaleY     = new KeyValue(markBox.scaleYProperty(), 1);
-            KeyValue kvMarkEndScaleY       = new KeyValue(markBox.scaleYProperty(), 0);
-
-            KeyValue kvCrossStartOpacity   = new KeyValue(crossBox.opacityProperty(), 0);
-            KeyValue kvCrossEndOpacity     = new KeyValue(crossBox.opacityProperty(), 1);
-
-            KeyValue kvCrossStartScaleX    = new KeyValue(crossBox.scaleXProperty(), 0);
-            KeyValue kvCrossEndScaleX      = new KeyValue(crossBox.scaleXProperty(), 1);
-
-            KeyValue kvCrossStartScaleY    = new KeyValue(crossBox.scaleYProperty(), 0);
-            KeyValue kvCrossEndScaleY      = new KeyValue(crossBox.scaleYProperty(), 1);
-
-            KeyFrame kfStart = new KeyFrame(Duration.ZERO, kvThumbStartTranslate,
-                                            kvMarkStartOpacity, kvMarkStartScaleX, kvMarkStartScaleY,
-                                            kvCrossStartOpacity, kvCrossStartScaleX, kvCrossStartScaleY);
-            KeyFrame kfEnd   = new KeyFrame(Duration.millis(200), kvThumbEndTranslate,
-                                            kvMarkEndOpacity, kvMarkEndScaleX, kvMarkEndScaleY,
-                                            kvCrossEndOpacity, kvCrossEndScaleX, kvCrossEndScaleY);
-
-            timeline.getKeyFrames().setAll(kfStart, kfEnd);
+            timeline.getKeyFrames().setAll(kfStart, kfEnd, kfRotateStart, kfRotateEnd);
             timeline.play();
+            timeline.setOnFinished(actionEvent -> crossBox.setRotate(0));
         }
     }
 

@@ -1,6 +1,10 @@
 package jfx8controls.ledcss;
 
 
+import javafx.css.CssMetaData;
+import javafx.css.ParsedValue;
+import javafx.css.StyleOrigin;
+import javafx.css.Styleable;
 import javafx.scene.control.Skin;
 import javafx.scene.control.SkinBase;
 import javafx.scene.effect.BlurType;
@@ -8,6 +12,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 
 public class LedSkin extends SkinBase<Led> implements Skin<Led> {
@@ -62,7 +67,8 @@ public class LedSkin extends SkinBase<Led> implements Skin<Led> {
 
         led = new Region();
         led.getStyleClass().setAll("main");
-        led.setStyle("-led-color: " + (getSkinnable().getLedColor()).toString().replace("0x", "#") + ";");
+        //led.setStyle("-led-color: " + (getSkinnable().getLedColor()).toString().replace("0x", "#") + ";");
+        getSkinnable().ledColorProperty().applyStyle(StyleOrigin.INLINE, getSkinnable().getLedColor());
 
         innerShadow = new InnerShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.65), 8, 0d, 0d, 0d);
 
@@ -90,7 +96,9 @@ public class LedSkin extends SkinBase<Led> implements Skin<Led> {
         if ("RESIZE".equals(PROPERTY)) {
             resize();
         } else if ("COLOR".equals(PROPERTY)) {
-            led.setStyle("-led-color: " + (getSkinnable().getLedColor()).toString().replace("0x", "#") + ";");
+            //led.setStyle("-led-color: " + (getSkinnable().getLedColor()).toString().replace("0x", "#") + ";");
+            getSkinnable().ledColorProperty().applyStyle(getSkinnable().ledColorProperty().getStyleOrigin(), getSkinnable().getLedColor());
+            System.out.println(getSkinnable().ledColorProperty().getCssMetaData());
             resize();
         } else if ("ON".equals(PROPERTY)) {
             led.setEffect(getSkinnable().isOn() ? glow : innerShadow);

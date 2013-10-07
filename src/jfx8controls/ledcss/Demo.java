@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
@@ -28,6 +29,8 @@ public class Demo extends Application {
         stage.show();
 
         control.setBlinking(true);
+
+        control.setLedColor(Color.CYAN);
 
         calcNoOfNodes(scene.getRoot());
         System.out.println(noOfNodes + " Nodes in SceneGraph");

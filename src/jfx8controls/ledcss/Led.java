@@ -8,11 +8,7 @@ import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleLongProperty;
-import javafx.css.CssMetaData;
-import javafx.css.PseudoClass;
-import javafx.css.Styleable;
-import javafx.css.StyleableObjectProperty;
-import javafx.css.StyleableProperty;
+import javafx.css.*;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.paint.Color;
@@ -25,8 +21,8 @@ import java.util.List;
 
 public class Led extends Control {
     // CSS Styleable property
-    private static final Color       DEFAULT_LED_COLOR = Color.RED;
-    private ObjectProperty<Paint>    ledColor;
+    private static final Color             DEFAULT_LED_COLOR = Color.RED;
+    private StyleableObjectProperty<Paint> ledColor;
 
     // CSS pseudo classes
     private static final PseudoClass ON_PSEUDO_CLASS   = PseudoClass.getPseudoClass("on");
@@ -144,7 +140,7 @@ public class Led extends Control {
     public final void setLedColor(final Paint VALUE) {
         ledColorProperty().set(VALUE);
     }
-    public final ObjectProperty<Paint> ledColorProperty() {
+    public final StyleableObjectProperty<Paint> ledColorProperty() {
         if (null == ledColor) {
             ledColor = new StyleableObjectProperty<Paint>(DEFAULT_LED_COLOR) {
                 @Override public CssMetaData getCssMetaData() { return StyleableProperties.LED_COLOR; }
@@ -195,7 +191,7 @@ public class Led extends Control {
         static {
             final List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<>(Control.getClassCssMetaData());
             Collections.addAll(styleables,
-                LED_COLOR
+                               LED_COLOR
             );
             STYLEABLES = Collections.unmodifiableList(styleables);
         }

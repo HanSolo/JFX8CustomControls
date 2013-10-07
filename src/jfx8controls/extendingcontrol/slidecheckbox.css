@@ -1,0 +1,81 @@
+.check-box {
+    -fx-label-padding: 0.0em 0.0em 0.0em 0.416667em; /* 0 0 0 5 */
+    -fx-text-fill    : -fx-text-background-color;
+}
+.check-box > .box {
+    -fx-body-color       : #bcbcbc;
+    -fx-background-color : -fx-outer-border, -fx-body-color;
+    -fx-background-insets: 0, 1;
+    -fx-padding          : 0.5em 0.8em 0.5em 0.5em;
+    -fx-text-fill        : -fx-text-base-color;
+    -fx-alignment        : CENTER;
+    -fx-content-display  : LEFT;
+    -fx-background-radius: 6, 5, 4;
+    -fx-padding          : 0.25em 0.25em 0.25em 0.25em;
+    -fx-effect           : innershadow(two-pass-box, rgba(0, 0, 0, 0.3), 6, 0.0, 0, 2)
+}
+.check-box > .box > .mark {
+    -fx-mark-highlight-color: rgba(0, 0, 0, 0.1);
+    -fx-mark-color          : white;
+    -fx-background-color    : -fx-mark-highlight-color, -fx-mark-color !important;
+    -fx-background-insets   : -1 0 1 0, 0;
+    -fx-scale-shape         : false;
+    -fx-shape               : "M 24.5625 27.7188 C 25.0171 27.6211 35.2175 17.318 35.2175 17.318 C 36.1938 16.3417 36.1938 14.7588 35.2175 13.7825 C 34.2412 12.8062 32.6583 12.8062 31.682 13.7825 L 22.75 22.715 L 19.2929 19.2574 C 18.3166 18.281 16.7337 18.281 15.7574 19.2574 C 14.781 20.2337 14.781 21.8166 15.7574 22.7929 L 20.7071 27.7426 C 21.6301 28.6657 23.4375 28.625 24.5625 27.7188 Z";
+}
+.check-box > .box > .cross {
+    -fx-mark-highlight-color: rgba(0, 0, 0, 0.1);
+    -fx-mark-color          : white;
+    -fx-background-color    : -fx-mark-highlight-color, -fx-mark-color !important;
+    -fx-background-insets   : -1 0 1 0, 0;
+    -fx-scale-shape         : false;
+    -fx-shape               : "M 70.9289 28.5711 C 71.9053 29.5474 73.4881 29.5474 74.4645 28.5711 L 78 25.035 L 81.5355 28.5711 C 82.5119 29.5474 84.0947 29.5474 85.0711 28.5711 C 86.0474 27.5947 86.0474 26.0119 85.0711 25.0355 L 81.535 21.5 L 85.0711 17.9645 C 86.0474 16.9881 86.0474 15.4053 85.0711 14.4289 C 84.0947 13.4526 82.5119 13.4526 81.5355 14.4289 L 78 17.965 L 74.4645 14.4289 C 73.4881 13.4526 71.9053 13.4526 70.9289 14.4289 C 69.9526 15.4053 69.9526 16.9881 70.9289 17.9645 L 74.465 21.5 L 70.9289 25.0355 C 69.9526 26.0119 69.9526 27.5947 70.9289 28.5711 Z";
+}
+.check-box > .box > .thumb {
+    -fx-background-color : #f7f8f5;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3.5;
+    -fx-effect           : dropshadow(two-pass-box, rgba(0, 0, 0, 0.3), 3, 0.0, 0, 2)
+}
+.check-box:indeterminate > .box {
+    -fx-padding: 0;
+}
+.check-box:indeterminate  > .box > .mark {
+    -fx-background-color : -fx-mark-highlight-color, -fx-mark-color !important;
+    -fx-background-insets: 1 0 -1 0, 0;
+    -fx-shape            : "M0,0H10V2H0Z";
+    -fx-scale-shape      : false;
+    -fx-padding          : 0.666667em; /* 16x16 = 8+8 */
+}
+.check-box:indeterminate  > .box > .cross {
+    -fx-background-color : -fx-mark-highlight-color, -fx-mark-color !important;
+    -fx-background-insets: 1 0 -1 0, 0;
+    -fx-shape            : "M0,0H10V2H0Z";
+    -fx-scale-shape      : false;
+    -fx-padding          : 0.666667em; /* 16x16 = 8+8 */
+}
+.check-box:hover .box {
+    -fx-color: -fx-hover-base;
+}
+.check-box:armed .box {
+    -fx-body-color: #78d302;
+}
+.check-box:focused > .box {
+}
+.check-box:disabled {
+    -fx-opacity: 0.4;
+}
+.check-box:selected > .box {
+    -fx-body-color: #78d302;
+}
+.check-box:selected > .box > .mark {
+    -fx-mark-highlight-color: rgba(0, 0, 0, 0.1);
+    -fx-mark-color          : white;
+    -fx-background-color    : -fx-mark-highlight-color, -fx-mark-color !important;
+    -fx-background-insets   : -1 0 1 0, 0;
+}
+.check-box:selected > .box > .cross {
+    -fx-mark-highlight-color: rgba(0, 0, 0, 0.1);
+    -fx-mark-color          : white;
+    -fx-background-color    : -fx-mark-highlight-color, -fx-mark-color !important;
+    -fx-background-insets   : -1 0 1 0, 0;
+}

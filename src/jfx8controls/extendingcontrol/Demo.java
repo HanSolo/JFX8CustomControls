@@ -24,12 +24,16 @@ public class Demo extends Application {
 
         Button button = new Button("just a button to change focus");
 
+        SlideCheckBox checkBox = new SlideCheckBox();
+        //checkBox.setScaleX(0.5);
+        //checkBox.setScaleY(0.5);
+
         VBox pane = new VBox();
         pane.setSpacing(10);
         pane.setPadding(new Insets(10, 10, 10, 10));
-        pane.getChildren().addAll(searchTextBox, button);
+        pane.getChildren().addAll(searchTextBox, button, checkBox);
 
-        Scene scene = new Scene(pane, 225, 100);
+        Scene scene = new Scene(pane, 225, 150);
 
         stage.setScene(scene);
         stage.setTitle("JavaFX Extending control");

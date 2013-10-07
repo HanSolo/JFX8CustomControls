@@ -203,4 +203,5 @@ var Led = function() {
     initGraphics();
     registerListeners();
 };
+
 var led = new Led();

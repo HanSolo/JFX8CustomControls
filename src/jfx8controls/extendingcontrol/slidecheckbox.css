@@ -24,8 +24,8 @@
     -fx-background-insets: 0, 1;
     -fx-padding          : 0.5em 0.8em 0.5em 0.5em;
     -fx-text-fill        : -fx-text-base-color;
-    -fx-alignment        : CENTER;
-    -fx-content-display  : LEFT;
+    -fx-alignment        : center;
+    -fx-content-display  : left;
     -fx-background-radius: 6, 5, 4;
     -fx-padding          : 0.25em 0.25em 0.25em 0.25em;
     -fx-effect           : innershadow(two-pass-box, rgba(0, 0, 0, 0.3), 6, 0.0, 0, 2)

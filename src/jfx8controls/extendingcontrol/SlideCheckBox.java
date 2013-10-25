@@ -27,6 +27,7 @@ import javafx.scene.control.CheckBox;
  */
 public class SlideCheckBox extends CheckBox {
 
+    // ******************** Constructors **************************************
     public SlideCheckBox() {
         this("");
     }

@@ -43,11 +43,9 @@ public class SlideCheckBoxBehavior <C extends ButtonBase> extends BehaviorBase<C
      * Constructors                                                            *
      *                                                                         *
      **************************************************************************/
-
     public SlideCheckBoxBehavior(final C button) {
         super(button, BUTTON_BINDINGS);
     }
-
     public SlideCheckBoxBehavior(final C button, final List<KeyBinding> bindings) {
         super(button, bindings);
     }

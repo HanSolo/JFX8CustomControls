@@ -30,8 +30,7 @@ import javafx.stage.Stage;
  * Date: 30.08.13
  * Time: 15:32
  */
-
-public class Demo extends Application {
+public class DemoSearchTextBox extends Application {
 
     @Override public void start(Stage stage) {
         SearchTextBox searchTextBox = new SearchTextBox();
@@ -39,15 +38,11 @@ public class Demo extends Application {
         searchTextBox.setLayoutY(50);
 
         Button button = new Button("just a button to change focus");
-
-        SlideCheckBox checkBox = new SlideCheckBox();
-        //checkBox.setScaleX(0.5);
-        //checkBox.setScaleY(0.5);
-
+                
         VBox pane = new VBox();
         pane.setSpacing(10);
         pane.setPadding(new Insets(10, 10, 10, 10));
-        pane.getChildren().addAll(searchTextBox, button, checkBox);
+        pane.getChildren().addAll(searchTextBox, button);
 
         Scene scene = new Scene(pane, 225, 150);
 

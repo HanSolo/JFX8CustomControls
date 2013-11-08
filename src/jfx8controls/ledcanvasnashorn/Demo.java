@@ -70,8 +70,8 @@ public class Demo extends Application {
 
     private String getScript() {
         StringBuilder scriptContent = new StringBuilder();
-        try {
-            Path path          = Paths.get("/Users/hansolo/IntelliJ_Projects/JavaOne2013/src/jfx8controls/ledcanvasnashorn/" + SCRIPT_FILE_NAME);
+        try {                                    
+            Path         path  = Paths.get((Demo.class.getResource(SCRIPT_FILE_NAME).toString().replace("file:", "")));            
             List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
             lines.forEach(line -> scriptContent.append(line));
             System.out.println("Script: " + SCRIPT_FILE_NAME + " successfully loaded");

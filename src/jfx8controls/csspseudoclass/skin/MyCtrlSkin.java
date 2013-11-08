@@ -17,11 +17,11 @@
 package jfx8controls.csspseudoclass.skin;
 
 
-import jfx8controls.csspseudoclass.MyCtrl;
 import javafx.scene.control.Skin;
 import javafx.scene.control.SkinBase;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import jfx8controls.csspseudoclass.MyCtrl;
 
 
 /**
@@ -86,9 +86,9 @@ public class MyCtrlSkin extends SkinBase<MyCtrl> implements Skin<MyCtrl> {
     private void registerListeners() {
         getSkinnable().widthProperty().addListener(observable -> handleControlPropertyChanged("RESIZE"));
         getSkinnable().heightProperty().addListener(observable -> handleControlPropertyChanged("RESIZE"));
-        getSkinnable().areaColorProperty().addListener(observable -> handleControlPropertyChanged("AREA_COLOR"));
+        getSkinnable().areaColorProperty().addListener(observable -> handleControlPropertyChanged("AREA_COLOR"));                
     }
-
+        
 
     // ******************** Methods *******************************************
     protected void handleControlPropertyChanged(final String PROPERTY) {

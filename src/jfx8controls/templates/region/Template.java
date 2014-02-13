@@ -18,7 +18,6 @@ package jfx8controls.templates.region;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 
 
 /**
@@ -94,13 +93,7 @@ public class Template extends Region {
 
     // ******************** Methods *******************************************
     
-
-
-    // ******************** Utility methods ***********************************
-    private static String colorToCss(final Color COLOR) {        
-        return COLOR.toString().replace("0x", "#");        
-    }
-
+    
 
     // ******************** Resizing ******************************************
     private void resize() {

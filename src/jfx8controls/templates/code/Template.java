@@ -30,7 +30,6 @@ public class Template extends Control {
     // Properties
     
 
-
     // ******************** Constructors **************************************
     public Template() {
         getStyleClass().add("template");        

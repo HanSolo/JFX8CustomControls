@@ -75,12 +75,14 @@ public class Template extends Region {
 
     private void registerListeners() {
         widthProperty().addListener(observable -> recalc());
-        heightProperty().addListener(observable -> recalc());        
+        heightProperty().addListener(observable -> recalc()); 
+        /* ADD LISTENERS TO YOUR PROPERTIES BELOW THIS */
     }
 
 
     // ******************** Methods *******************************************   
 
+    
     
     // ******************** Resize/Redraw *************************************
     private void recalc() {        
@@ -105,6 +107,7 @@ public class Template extends Region {
 
         ctx.clearRect(0, 0, size, size);
         
+        /* RESIZE AND RELOCATE YOUR CANVAS SHAPES BELOW THIS */
         ctx.setFill(sampleRegionFill);            
         ctx.fillRect(0.25 * size, 0.25 * size, 0.5 * size, 0.5 * size);
     }

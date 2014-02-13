@@ -16,15 +16,14 @@
 
 package jfx8controls.styleableproperty;
 
-import jfx8controls.csspseudoclass.MyCtrl;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import jfx8controls.csspseudoclass.MyCtrl;
 
 
 /**
@@ -47,10 +46,12 @@ public class Demo extends Application {
     private void registerListeners() {
         buttonStyleable.setOnAction(actionEvent -> {
             if (buttonStyleable.isSelected()) {
-                myCtrl.setAreaColor(Color.LIME);
+                //myCtrl.setAreaColor(Color.LIME);
+                myCtrl.setStyle("-area-color: #00FF00");
                 buttonStyleable.setText("BLUE");
             } else {
-                myCtrl.setAreaColor(Color.BLUE);
+                //myCtrl.setAreaColor(Color.BLUE);
+                myCtrl.setStyle("-area-color: #0000FF");
                 buttonStyleable.setText("LIME");
             }
         });

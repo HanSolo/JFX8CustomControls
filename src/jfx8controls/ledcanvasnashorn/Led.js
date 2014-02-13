@@ -14,45 +14,47 @@
  * limitations under the License.
  */
 
-var System                = Java.type("java.lang.System");
-var AnimationTimer        = Java.type("javafx.animation.AnimationTimer");
-var InvalidationListener  = Java.type("javafx.beans.InvalidationListener");
-var BooleanProperty       = Java.type("javafx.beans.property.BooleanProperty");
-var LongProperty          = Java.type("javafx.beans.property.LongProperty");
-var ObjectProperty        = Java.type("javafx.beans.property.ObjectProperty");
-var SimpleBooleanProperty = Java.type("javafx.beans.property.SimpleBooleanProperty");
-var SimpleLongProperty    = Java.type("javafx.beans.property.SimpleLongProperty");
-var SimpleObjectProperty  = Java.type("javafx.beans.property.SimpleObjectProperty");
-var Canvas                = Java.type("javafx.scene.canvas.Canvas");
-var GraphicsContext       = Java.type("javafx.scene.canvas.GraphicsContext");
-var BlurType              = Java.type("javafx.scene.effect.BlurType");
-var DropShadow            = Java.type("javafx.scene.effect.DropShadow");
-var InnerShadow           = Java.type("javafx.scene.effect.InnerShadow");
-var Pane                  = Java.type("javafx.scene.layout.StackPane");
-var Color                 = Java.type("javafx.scene.paint.Color");
-var CycleMethod           = Java.type("javafx.scene.paint.CycleMethod");
-var LinearGradient        = Java.type("javafx.scene.paint.LinearGradient");
-var Paint                 = Java.type("javafx.scene.paint.Paint");
-var RadialGradient        = Java.type("javafx.scene.paint.RadialGradient");
-var Stop                  = Java.type("javafx.scene.paint.Stop");
+var System                 = Java.type("java.lang.System");
+var AnimationTimer         = Java.type("javafx.animation.AnimationTimer");
+var InvalidationListener   = Java.type("javafx.beans.InvalidationListener");
+var BooleanProperty        = Java.type("javafx.beans.property.BooleanProperty");
+var LongProperty           = Java.type("javafx.beans.property.LongProperty");
+var ObjectProperty         = Java.type("javafx.beans.property.ObjectProperty");
+var SimpleBooleanProperty  = Java.type("javafx.beans.property.SimpleBooleanProperty");
+var SimpleLongProperty     = Java.type("javafx.beans.property.SimpleLongProperty");
+var SimpleObjectProperty   = Java.type("javafx.beans.property.SimpleObjectProperty");
+var Canvas                 = Java.type("javafx.scene.canvas.Canvas");
+var GraphicsContext        = Java.type("javafx.scene.canvas.GraphicsContext");
+var BlurType               = Java.type("javafx.scene.effect.BlurType");
+var DropShadow             = Java.type("javafx.scene.effect.DropShadow");
+var InnerShadow            = Java.type("javafx.scene.effect.InnerShadow");
+var Pane                   = Java.type("javafx.scene.layout.StackPane");
+var Color                  = Java.type("javafx.scene.paint.Color");
+var CycleMethod            = Java.type("javafx.scene.paint.CycleMethod");
+var LinearGradient         = Java.type("javafx.scene.paint.LinearGradient");
+var Paint                  = Java.type("javafx.scene.paint.Paint");
+var RadialGradient         = Java.type("javafx.scene.paint.RadialGradient");
+var Stop                   = Java.type("javafx.scene.paint.Stop");
 
 var Led = function() {
-    var PREFERRED_SIZE = 64;
-    var MINIMUM_SIZE   = 8;
-    var MAXIMUM_SIZE   = 1024;
+    var PREFERRED_SIZE     = 64;
+    var MINIMUM_SIZE       = 8;
+    var MAXIMUM_SIZE       = 1024;
+    var SHORTEST_INTVERVAL = 50000000;
+    var LONGEST_INTERVAL   = 5000000000;
     var size;
 
-    var region         = new Pane();
+    var region             = new Pane();
     var canvas;
     var ctx;
-    var ledColor       = new SimpleObjectProperty(Color.RED);
-    var ledOn          = new SimpleBooleanProperty(false);
-    var blinking       = new SimpleBooleanProperty(false);
-    var frameVisible   = new SimpleBooleanProperty(true);
-    var toggle         = false;
-    var lastTimerCall  = System.nanoTime();
-    var interval       = new SimpleLongProperty(500000000);
-    var timer          = new AnimationTimer() {
+    var ledColor           = new SimpleObjectProperty(Color.RED);
+    var ledOn              = new SimpleBooleanProperty(false);
+    var blinking           = new SimpleBooleanProperty(false);
+    var frameVisible       = new SimpleBooleanProperty(true);
+    var toggle             = false;
+    var lastTimerCall      = System.nanoTime();
+    var interval           = new SimpleLongProperty(500000000);
+    var timer              = new AnimationTimer() {
         handle: function handle(now) {
             if (now > lastTimerCall + interval.get()) {
                 toggle ^= true;
@@ -112,7 +114,7 @@ var Led = function() {
         return interval.get();
     };
     this.setInterval = function(newInterval) {
-        interval.set(clamp(50000000, 5000000000, newInterval));
+        interval.set(clamp(SHORTEST_INTVERVAL, LONGEST_INTERVAL, newInterval));
     };
     this.intervalProperty = function() {
         return interval;

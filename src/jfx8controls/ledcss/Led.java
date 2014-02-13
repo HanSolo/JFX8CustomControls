@@ -21,10 +21,13 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
 import javafx.beans.property.LongProperty;
-import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.LongPropertyBase;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleLongProperty;
-import javafx.css.*;
+import javafx.css.CssMetaData;
+import javafx.css.PseudoClass;
+import javafx.css.Styleable;
+import javafx.css.StyleableObjectProperty;
+import javafx.css.StyleableProperty;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.paint.Color;
@@ -36,24 +39,27 @@ import java.util.List;
 
 
 public class Led extends Control {
+    private static final long              SHORTEST_INTERVAL = 50_000_000l;
+    private static final long              LONGEST_INTERVAL  = 5_000_000_000l;
+    
     // CSS Styleable property
     private static final Color             DEFAULT_LED_COLOR = Color.RED;
     private StyleableObjectProperty<Paint> ledColor;
 
     // CSS pseudo classes
-    private static final PseudoClass ON_PSEUDO_CLASS   = PseudoClass.getPseudoClass("on");
-    private BooleanProperty          on;
+    private static final PseudoClass       ON_PSEUDO_CLASS   = PseudoClass.getPseudoClass("on");
+    private BooleanProperty                on;
 
     // Properties
-    private boolean                  _blinking = false;
-    private BooleanProperty          blinking;
-    private boolean                  _frameVisible = true;
-    private BooleanProperty          frameVisible;
-    private boolean                  toggle;
-    private long                     lastTimerCall;
-    private long                     _interval = 500_000_000l;
-    private LongProperty             interval;
-    private AnimationTimer           timer;
+    private boolean                        _blinking = false;
+    private BooleanProperty                blinking;
+    private boolean                        _frameVisible = true;
+    private BooleanProperty                frameVisible;
+    private boolean                        toggle;
+    private long                           lastTimerCall;
+    private long                           _interval = 500_000_000l;
+    private LongProperty                   interval;
+    private AnimationTimer                 timer;
 
 
     // ******************** Constructors **************************************
@@ -97,19 +103,35 @@ public class Led extends Control {
     public final void setBlinking(final boolean BLINKING) {
         if (null == blinking) {
             _blinking = BLINKING;
+            if (BLINKING) {
+                timer.start();
+            } else {
+                timer.stop();
+                setOn(false);
+            }
         } else {
             blinking.set(BLINKING);
         }
-        if (BLINKING) {
-            timer.start();
-        } else {
-            timer.stop();
-            setOn(false);
-        }
     }
     public final BooleanProperty blinkingProperty() {
-        if (null == blinking) {
-            blinking = new SimpleBooleanProperty(this, "blinking", _blinking);
+        if (null == blinking) {            
+            blinking = new BooleanPropertyBase() {
+                @Override public void set(final boolean BLINKING) {
+                    super.set(BLINKING);
+                    if (BLINKING) {
+                        timer.start();
+                    } else {
+                        timer.stop();
+                        setOn(false);
+                    }
+                }
+                @Override public Object getBean() {
+                    return Led.this;
+                }
+                @Override public String getName() {
+                    return "blinking";
+                }
+            };
         }
         return blinking;
     }
@@ -119,14 +141,24 @@ public class Led extends Control {
     }
     public final void setInterval(final long INTERVAL) {
         if (null == interval) {
-            _interval = clamp(50_000_000l, 5_000_000_000l, INTERVAL);
+            _interval = clamp(SHORTEST_INTERVAL, LONGEST_INTERVAL, INTERVAL);
         } else {
-            interval.set(clamp(50_000_000l, 5_000_000_000l, INTERVAL));
+            interval.set(INTERVAL);
         }
     }
     public final LongProperty intervalProperty() {
         if (null == interval) {
-            interval = new SimpleLongProperty(this, "interval", _interval);
+            interval = new LongPropertyBase() {
+                @Override public void set(final long INTERVAL) {
+                    super.set(clamp(SHORTEST_INTERVAL, LONGEST_INTERVAL, INTERVAL));
+                }
+                @Override public Object getBean() {
+                    return Led.this;
+                }
+                @Override public String getName() {
+                    return "interval";
+                }
+            };
         }
         return interval;
     }

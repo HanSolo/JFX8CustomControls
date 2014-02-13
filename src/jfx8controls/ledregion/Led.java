@@ -20,9 +20,9 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
 import javafx.beans.property.LongProperty;
+import javafx.beans.property.LongPropertyBase;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.css.PseudoClass;
 import javafx.scene.effect.BlurType;
@@ -33,29 +33,31 @@ import javafx.scene.paint.Color;
 
 
 public class Led extends Region {
-    private static final double      PREFERRED_SIZE  = 16;
-    private static final double      MINIMUM_SIZE    = 8;
-    private static final double      MAXIMUM_SIZE    = 1024;
-    private static final PseudoClass ON_PSEUDO_CLASS = PseudoClass.getPseudoClass("on");
-
-    private ObjectProperty<Color> ledColor;
-    private BooleanProperty       on;
-    private boolean               _blinking = false;
-    private BooleanProperty       blinking;
-    private boolean               _frameVisible = true;
-    private BooleanProperty       frameVisible;
-    private boolean               toggle;
-    private long                  lastTimerCall;
-    private long                  _interval = 500_000_000l;
-    private LongProperty          interval;
-    private AnimationTimer        timer;
-
-    private double                size;
-    private Region                frame;
-    private Region                led;
-    private Region                highlight;
-    private InnerShadow           innerShadow;
-    private DropShadow            glow;
+    private static final double      PREFERRED_SIZE    = 16;
+    private static final double      MINIMUM_SIZE      = 8;
+    private static final double      MAXIMUM_SIZE      = 1024;
+    private static final PseudoClass ON_PSEUDO_CLASS   = PseudoClass.getPseudoClass("on");
+    private static final long        SHORTEST_INTERVAL = 50_000_000l;
+    private static final long        LONGEST_INTERVAL  = 5_000_000_000l;
+    // Model/Controller related
+    private ObjectProperty<Color>    ledColor;
+    private BooleanProperty          on;
+    private boolean                  _blinking = false;
+    private BooleanProperty          blinking;
+    private boolean                  _frameVisible = true;
+    private BooleanProperty          frameVisible;
+    private boolean                  toggle;
+    private long                     lastTimerCall;
+    private long                     _interval = 500_000_000l;
+    private LongProperty             interval;
+    private AnimationTimer           timer;
+    // View related
+    private double                   size;
+    private Region                   frame;
+    private Region                   led;
+    private Region                   highlight;
+    private InnerShadow              innerShadow;
+    private DropShadow               glow;
 
 
     // ******************** Constructors **************************************
@@ -82,18 +84,14 @@ public class Led extends Region {
 
     // ******************** Initialization ************************************
     private void init() {
-        if (Double.compare(getWidth(), 0) <= 0 ||
-            Double.compare(getHeight(), 0) <= 0 ||
-            Double.compare(getPrefWidth(), 0) <= 0 ||
-            Double.compare(getPrefHeight(), 0) <= 0) {
+        if (Double.compare(getWidth(), 0) <= 0 || Double.compare(getHeight(), 0) <= 0 ||
+            Double.compare(getPrefWidth(), 0) <= 0 || Double.compare(getPrefHeight(), 0) <= 0) {
             setPrefSize(PREFERRED_SIZE, PREFERRED_SIZE);
         }
-        if (Double.compare(getMinWidth(), 0) <= 0 ||
-            Double.compare(getMinHeight(), 0) <= 0) {
+        if (Double.compare(getMinWidth(), 0) <= 0 || Double.compare(getMinHeight(), 0) <= 0) {
             setMinSize(MINIMUM_SIZE, MINIMUM_SIZE);
         }
-        if (Double.compare(getMaxWidth(), 0) <= 0 ||
-            Double.compare(getMaxHeight(), 0) <= 0) {
+        if (Double.compare(getMaxWidth(), 0) <= 0 || Double.compare(getMaxHeight(), 0) <= 0) {
             setMaxSize(MAXIMUM_SIZE, MAXIMUM_SIZE);
         }
     }
@@ -131,36 +129,7 @@ public class Led extends Region {
     }
 
 
-    // ******************** Methods *******************************************
-    @Override protected double computePrefWidth(final double PREF_HEIGHT) {
-        double prefHeight = PREFERRED_SIZE;
-        if (PREF_HEIGHT != -1) {
-            prefHeight = Math.max(0, PREF_HEIGHT - getInsets().getTop() - getInsets().getBottom());
-        }
-        return super.computePrefWidth(prefHeight);
-    }
-    @Override protected double computePrefHeight(final double PREF_WIDTH) {
-        double prefWidth = PREFERRED_SIZE;
-        if (PREF_WIDTH != -1) {
-            prefWidth = Math.max(0, PREF_WIDTH - getInsets().getLeft() - getInsets().getRight());
-        }
-        return super.computePrefWidth(prefWidth);
-    }
-
-    @Override protected double computeMinWidth(final double MIN_HEIGHT) {
-        return super.computeMinWidth(Math.max(MINIMUM_SIZE, MIN_HEIGHT - getInsets().getTop() - getInsets().getBottom()));
-    }
-    @Override protected double computeMinHeight(final double MIN_WIDTH) {
-        return super.computeMinHeight(Math.max(MINIMUM_SIZE, MIN_WIDTH - getInsets().getLeft() - getInsets().getRight()));
-    }
-
-    @Override protected double computeMaxWidth(final double MAX_HEIGHT) {
-        return super.computeMaxWidth(Math.min(MAXIMUM_SIZE, MAX_HEIGHT - getInsets().getTop() - getInsets().getBottom()));
-    }
-    @Override protected double computeMaxHeight(final double MAX_WIDTH) {
-        return super.computeMaxHeight(Math.min(MAXIMUM_SIZE, MAX_WIDTH - getInsets().getLeft() - getInsets().getRight()));
-    }
-
+    // ******************** Methods *******************************************   
     public final boolean isOn() {
         return null == on ? false : on.get();
     }
@@ -184,9 +153,21 @@ public class Led extends Region {
     public final void setBlinking(final boolean BLINKING) {
         if (null == blinking) {
             _blinking = BLINKING;
+            if (BLINKING) {
+                timer.start();
+            } else {
+                timer.stop();
+                setOn(false);
+            }
         } else {
             blinking.set(BLINKING);
         }
+    }
+    public final BooleanProperty blinkingProperty() {
+        if (null == blinking) {            
+            blinking = new BooleanPropertyBase() {
+                @Override public void set(final boolean BLINKING) {
+                    super.set(BLINKING);
         if (BLINKING) {
             timer.start();
         } else {
@@ -194,9 +175,13 @@ public class Led extends Region {
             setOn(false);
         }
     }
-    public final BooleanProperty blinkingProperty() {
-        if (null == blinking) {
-            blinking = new SimpleBooleanProperty(this, "blinking", _blinking);
+                @Override public Object getBean() {
+                    return Led.this;
+                }
+                @Override public String getName() {
+                    return "blinking";
+                }
+            };
         }
         return blinking;
     }
@@ -206,14 +191,24 @@ public class Led extends Region {
     }
     public final void setInterval(final long INTERVAL) {
         if (null == interval) {
-            _interval = clamp(50_000_000l, 5_000_000_000l, INTERVAL);
+            _interval = clamp(SHORTEST_INTERVAL, LONGEST_INTERVAL, INTERVAL);
         } else {
-            interval.set(clamp(50_000_000l, 5_000_000_000l, INTERVAL));
+            interval.set(INTERVAL);
         }
     }
     public final LongProperty intervalProperty() {
         if (null == interval) {
-            interval = new SimpleLongProperty(this, "interval", _interval);
+            interval = new LongPropertyBase() {
+                @Override public void set(final long INTERVAL) {
+                    super.set(clamp(SHORTEST_INTERVAL, LONGEST_INTERVAL, INTERVAL));
+                }
+                @Override public Object getBean() {
+                    return Led.this;
+                }
+                @Override public String getName() {
+                    return "interval";
+                }
+            };
         }
         return interval;
     }
@@ -261,6 +256,12 @@ public class Led extends Region {
     private void resize() {
         size = getWidth() < getHeight() ? getWidth() : getHeight();
         if (size > 0) {
+            if (getWidth() > getHeight()) {
+                setTranslateX(0.5 * (getWidth() - size));
+            } else if (getHeight() > getWidth()) {
+                setTranslateY(0.5 * (getHeight() - size));
+            }
+
             innerShadow.setRadius(0.07 * size);
             glow.setRadius(0.36 * size);
             glow.setColor(getLedColor());
@@ -276,4 +277,3 @@ public class Led extends Region {
         }
     }
 }
-

@@ -44,7 +44,7 @@ public class Demo extends Application {
         stage.show();
 
         control.setBlinking(true);
-
+        
         calcNoOfNodes(scene.getRoot());
         System.out.println(noOfNodes + " Nodes in SceneGraph");
     }

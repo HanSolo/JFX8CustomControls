@@ -62,7 +62,6 @@ public class Led extends Region {
     private LinearGradient        ledOnGradient;
     private LinearGradient        ledOffGradient;
     private RadialGradient        highlightGradient;
-    private boolean               toggle;
     private long                  lastTimerCall;
     private long                  _interval = 500_000_000l;
     private LongProperty          interval;
@@ -73,14 +72,12 @@ public class Led extends Region {
 
 
     // ******************** Constructors **************************************
-    public Led() {
-        toggle        = false;
+    public Led() {        
         lastTimerCall = System.nanoTime();
         timer         = new AnimationTimer() {
             @Override public void handle(final long NOW) {
-                if (NOW > lastTimerCall + getInterval()) {
-                    toggle ^= true;
-                    setOn(toggle);
+                if (NOW > lastTimerCall + getInterval()) {                  
+                    setOn(!isOn());
                     lastTimerCall = NOW;
                 }
             }

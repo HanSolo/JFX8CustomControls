@@ -44,7 +44,7 @@
 .led .highlight {
     -fx-background-color : radial-gradient(center 15% 15%, radius 50%,
                                            white 0%,
-                                           transparent 100%);
+                                           transparent 100%);   
     -fx-background-radius: 1024;
 }
 

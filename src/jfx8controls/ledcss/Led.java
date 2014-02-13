@@ -55,7 +55,6 @@ public class Led extends Control {
     private BooleanProperty                blinking;
     private boolean                        _frameVisible = true;
     private BooleanProperty                frameVisible;
-    private boolean                        toggle;
     private long                           lastTimerCall;
     private long                           _interval = 500_000_000l;
     private LongProperty                   interval;
@@ -64,14 +63,12 @@ public class Led extends Control {
 
     // ******************** Constructors **************************************
     public Led() {
-        getStyleClass().add("led");
-        toggle        = false;
+        getStyleClass().add("led");        
         lastTimerCall = System.nanoTime();
         timer         = new AnimationTimer() {
             @Override public void handle(final long NOW) {
-                if (NOW > lastTimerCall + getInterval()) {
-                    toggle ^= true;
-                    setOn(toggle);
+                if (NOW > lastTimerCall + getInterval()) {                    
+                    setOn(!isOn());
                     lastTimerCall = NOW;
                 }
             }

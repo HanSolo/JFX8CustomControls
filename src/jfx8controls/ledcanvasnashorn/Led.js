@@ -50,15 +50,13 @@ var Led = function() {
     var ledColor           = new SimpleObjectProperty(Color.RED);
     var ledOn              = new SimpleBooleanProperty(false);
     var blinking           = new SimpleBooleanProperty(false);
-    var frameVisible       = new SimpleBooleanProperty(true);
-    var toggle             = false;
+    var frameVisible       = new SimpleBooleanProperty(true);    
     var lastTimerCall      = System.nanoTime();
     var interval           = new SimpleLongProperty(500000000);
     var timer              = new AnimationTimer() {
         handle: function handle(now) {
-            if (now > lastTimerCall + interval.get()) {
-                toggle ^= true;
-                ledOn.set(toggle);
+            if (now > lastTimerCall + interval.get()) {                
+                ledOn.set(!ledOn.get());
                 lastTimerCall = now;
             }
         }

@@ -14,12 +14,7 @@
  * limitations under the License.
  */
 
-package jfx8controls.csspseudoclass;/**
- * Created by
- * User: hansolo
- * Date: 25.07.13
- * Time: 14:32
- */
+package jfx8controls.csspseudoclass;
 
 import com.sun.javafx.css.converters.PaintConverter;
 import jfx8controls.csspseudoclass.skin.MyCtrlSkin;

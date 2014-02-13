@@ -1,4 +1,4 @@
 JFX8CustomControls
 ==================
 
-Contains the code of my JFX8 Custom Controls talk
+Contains examples and templates for JavaFX 8 custom controls

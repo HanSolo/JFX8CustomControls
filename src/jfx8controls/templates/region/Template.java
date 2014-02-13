@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-package jfx8controls.codetemplate;
+package jfx8controls.templates.region;
 
-import javafx.scene.control.Skin;
-import javafx.scene.control.SkinBase;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 
 
 /**
  * User: hansolo
  * Date: 13.02.14
- * Time: 11:42
+ * Time: 11:16
  */
-public class TemplateSkin extends SkinBase<Template> implements Skin<Template> {
+public class Template extends Region {
     private static final double PREFERRED_WIDTH  = 150;
     private static final double PREFERRED_HEIGHT = 150;
     private static final double MINIMUM_WIDTH    = 5;
@@ -35,70 +34,80 @@ public class TemplateSkin extends SkinBase<Template> implements Skin<Template> {
     private static final double MAXIMUM_WIDTH    = 1024;
     private static final double MAXIMUM_HEIGHT   = 1024;
     
-    private double size;    // current smallest dimension
-    private double width;   // current width
-    private double height;  // current height
-    private Region sample;  // sample region
-    private Pane   pane;    // main layout container that holds all your nodes
+    private        double  size;    // current smallest dimension
+    private        double  width;   // current width
+    private        double  height;  // current height
+    private        Region  sample;  // sample region
+    private        Pane    pane;    // main layout container that holds all your nodes
 
 
     // ******************** Constructors **************************************
-    public TemplateSkin(final Template CONTROL) {
-        super(CONTROL);
+    public Template() {
+        /* LOAD THE APPROPRIATE STYLE SHEET FILE */
+        getStylesheets().add(getClass().getResource("template.css").toExternalForm());
+        
+        /* ADD THE MAIN STYLE CLASS */ 
+        getStyleClass().add("template");
+        
+        /* INITIALZE THE CONTROL */
         init();
         initGraphics();
         registerListeners();
     }
 
+
+    // ******************** Initialization ************************************
     private void init() {
-        if (Double.compare(getSkinnable().getPrefWidth(), 0.0) <= 0 || Double.compare(getSkinnable().getPrefHeight(), 0.0) <= 0 ||
-            Double.compare(getSkinnable().getWidth(), 0.0) <= 0 || Double.compare(getSkinnable().getHeight(), 0.0) <= 0) {
-            if (getSkinnable().getPrefWidth() > 0 && getSkinnable().getPrefHeight() > 0) {
-                getSkinnable().setPrefSize(getSkinnable().getPrefWidth(), getSkinnable().getPrefHeight());
+        if (Double.compare(getPrefWidth(), 0.0) <= 0 || Double.compare(getPrefHeight(), 0.0) <= 0 ||
+            Double.compare(getWidth(), 0.0) <= 0 || Double.compare(getHeight(), 0.0) <= 0) {
+            if (getPrefWidth() > 0 && getPrefHeight() > 0) {
+                setPrefSize(getPrefWidth(), getPrefHeight());
             } else {
-                getSkinnable().setPrefSize(PREFERRED_WIDTH, PREFERRED_HEIGHT);
+                setPrefSize(PREFERRED_WIDTH, PREFERRED_HEIGHT);
             }
         }
-        if (Double.compare(getSkinnable().getMinWidth(), 0.0) <= 0 || Double.compare(getSkinnable().getMinHeight(), 0.0) <= 0) {
-            getSkinnable().setMinSize(MINIMUM_WIDTH, MINIMUM_HEIGHT);
+        if (Double.compare(getMinWidth(), 0.0) <= 0 || Double.compare(getMinHeight(), 0.0) <= 0) {
+            setMinSize(MINIMUM_WIDTH, MINIMUM_HEIGHT);
         }
-        if (Double.compare(getSkinnable().getMaxWidth(), 0.0) <= 0 || Double.compare(getSkinnable().getMaxHeight(), 0.0) <= 0) {
-            getSkinnable().setMaxSize(MAXIMUM_WIDTH, MAXIMUM_HEIGHT);
-        }
+        if (Double.compare(getMaxWidth(), 0.0) <= 0 || Double.compare(getMaxHeight(), 0.0) <= 0) {
+            setMaxSize(MAXIMUM_WIDTH, MAXIMUM_HEIGHT);
+        }        
     }
 
     private void initGraphics() {
         // Setup the scene graph of your control here
-
+        
         sample = new Region();
         sample.getStyleClass().setAll("sample-style");
-
+        
         pane = new Pane(sample /* ADD ALL YOUR NODES TO THIS PANE */);
-
+        
         getChildren().setAll(pane);
     }
 
     private void registerListeners() {
-        getSkinnable().widthProperty().addListener(observable -> handleControlPropertyChanged("RESIZE") );
-        getSkinnable().heightProperty().addListener(observable -> handleControlPropertyChanged("RESIZE"));
+        widthProperty().addListener(observable -> resize());
+        heightProperty().addListener(observable -> resize()); 
         /* ADD LISTENERS TO YOUR PROPERTIES BELOW THIS */
     }
 
 
     // ******************** Methods *******************************************
-    protected void handleControlPropertyChanged(final String PROPERTY) {
-        if ("RESIZE".equals(PROPERTY)) {
-            resize();
-        }
+    
+
+
+    // ******************** Utility methods ***********************************
+    private static String colorToCss(final Color COLOR) {        
+        return COLOR.toString().replace("0x", "#");        
     }
 
 
     // ******************** Resizing ******************************************
     private void resize() {
-        width  = getSkinnable().getWidth();
-        height = getSkinnable().getHeight();
-        size   = width < height ? width : height;
-
+        width  = getWidth();
+        height = getHeight();
+        size   = width < height ? width : height;        
+        
         if (width > 0 && height > 0) {
             pane.setMaxSize(size, size);
             pane.relocate((width - size) * 0.5, (height - size) * 0.5);

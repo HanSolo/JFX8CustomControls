@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jfx8controls.canvastemplate;
+package jfx8controls.templates.canvas;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

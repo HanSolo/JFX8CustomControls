@@ -14,30 +14,10 @@
  * limitations under the License.
  */
 
-package jfx8controls.codetemplate;
+package jfx8controls.templates.code;
 
-import com.sun.javafx.css.converters.PaintConverter;
-import javafx.animation.AnimationTimer;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.BooleanPropertyBase;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.LongPropertyBase;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.css.CssMetaData;
-import javafx.css.PseudoClass;
-import javafx.css.Styleable;
-import javafx.css.StyleableObjectProperty;
-import javafx.css.StyleableProperty;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import jfx8controls.ledcode.LedSkin;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 
 /**

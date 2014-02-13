@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package jfx8controls.codetemplate;
+package jfx8controls.templates.region;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,28 +22,23 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 
-/**
- * User: hansolo
- * Date: 13.02.14
- * Time: 11:43
- */
 public class Demo extends Application {
     private Template template;
-
+    
     @Override public void init() {
         template = new Template();
     }
-
-    @Override public void start(Stage stage) {
+    
+    @Override public void start(Stage stage) {                
         StackPane pane = new StackPane();
         pane.getChildren().addAll(template);
-
+        
         Scene scene = new Scene(pane);
-
+        
         stage.setScene(scene);
         stage.show();
     }
-
+    
     public static void main(String[] args) {
         launch(args);
     }
